@@ -1,0 +1,47 @@
+{% set name = "ncls" %}
+{% set version = "0.0.42" %}
+{% set file_ext = "tar.gz" %}
+{% set hash_type = "sha256" %}
+{% set hash_value = "4fe09e183314bcaa2cd2391811999d1e10878126b64e052e34f7d207fbebd096" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  fn: '{{ name }}-{{ version }}.{{ file_ext }}'
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ file_ext }}
+  '{{ hash_type }}': '{{ hash_value }}'
+
+build:
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  host:
+    - python
+    - setuptools
+    - cython
+    - numpy
+  run:
+    - python
+    - cython
+    - numpy
+
+test:
+  imports:
+    - ncls
+    - ncls.src
+
+about:
+  home: https://github.com/endrebak/ncls
+  license: New BSD License
+  license_family: BSD
+  license_file: 'LICENSE.txt'
+  summary: A wrapper for the nested containment list data structure.
+  description: ''
+  doc_url: ''
+  dev_url: ''
+
+extra:
+  recipe-maintainers: 'endrebak'
